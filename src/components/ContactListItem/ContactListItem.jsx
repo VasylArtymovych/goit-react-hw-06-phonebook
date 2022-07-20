@@ -1,20 +1,21 @@
+import { useDispatch } from 'react-redux';
 import { Item, Button } from './ContactListItem.styled';
-import { useContacts } from 'components/ContextProvider';
+import { deleteContact } from '../../redux';
 
-const ContactListItem = () => {
-  const { contacts, onDelete } = useContacts();
-  return contacts.map(({ id, name, number }) => (
-    <Item key={id}>
+const ContactListItem = ({ id, name, number }) => {
+  const dispatch = useDispatch();
+  return (
+    <Item>
       {name}: {number}
       <Button
         onClick={() => {
-          onDelete(id);
+          dispatch(deleteContact(id));
         }}
       >
         Delete
       </Button>
     </Item>
-  ));
+  );
 };
 
 export default ContactListItem;
