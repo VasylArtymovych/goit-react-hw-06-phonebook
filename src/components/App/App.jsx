@@ -37,7 +37,7 @@ const App = () => {
         <Title>Contacts</Title>
         <Box display="flex" justifyContent="space-between">
           <Filter value={filterValue} onChange={handleFilterInput} />
-          <h3>Total contacts: {contacts.length}</h3>
+          <h3>Total contacts: {filteredContacts.length}</h3>
         </Box>
         <ContactList contacts={filteredContacts} dispatch={dispatch} />
       </Container>
