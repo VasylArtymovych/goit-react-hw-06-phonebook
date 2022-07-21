@@ -8,6 +8,7 @@ const initialContacts = [
 ];
 
 const initialState = { items: initialContacts, filter: '' };
+
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,

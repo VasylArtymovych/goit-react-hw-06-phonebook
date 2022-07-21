@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
-import { addContact } from '../../redux';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+import { addContact } from '../../redux';
 import { Form, Label, Input, Button } from './ContactForm.styled';
 
 const ContactForm = () => {
@@ -73,6 +74,10 @@ const ContactForm = () => {
       <Button>Add contact</Button>
     </Form>
   );
+};
+
+ContactForm.propTypes = {
+  dispatch: PropTypes.func,
 };
 
 export default ContactForm;
