@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
-import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addContact } from '../../redux';
+import { useContacts } from '../../redux';
 import { Form, Label, Input, Button } from './ContactForm.styled';
 
 const ContactForm = () => {
@@ -11,7 +10,8 @@ const ContactForm = () => {
 
   const inputNameId = nanoid(12);
   const inputNumberId = nanoid(12);
-  const dispatch = useDispatch();
+
+  const { addContact } = useContacts();
 
   const inputChangeHandler = event => {
     const { name, value } = event.target;
@@ -34,7 +34,7 @@ const ContactForm = () => {
       name,
       number,
     };
-    dispatch(addContact(contact));
+    addContact(contact);
     resetForm();
   };
 

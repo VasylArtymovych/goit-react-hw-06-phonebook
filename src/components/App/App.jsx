@@ -1,24 +1,21 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { setfilter } from '../../redux';
 import ContactForm from 'components/ContactForm';
 import ContactList from 'components/ContactLIst';
 import Filter from 'components/Filter';
 import { Box } from 'components/Box/Box';
 import { Container, Title } from './App.styled';
+import { useContacts } from '../../redux';
 
 const App = () => {
-  const contacts = useSelector(state => state.contacts.items);
-  const filterValue = useSelector(state => state.contacts.filter);
-  const dispatch = useDispatch();
+  const { contacts, filter, setFilter } = useContacts();
 
   const handleFilterInput = event => {
     const { value } = event.target;
-    dispatch(setfilter(value));
+    setFilter(value);
   };
 
   const filterContacts = () => {
     if (contacts.length !== 0) {
-      const normalizedFilter = filterValue.toLowerCase();
+      const normalizedFilter = filter.toLowerCase();
       return contacts.filter(({ name }) =>
         name.toLowerCase().includes(normalizedFilter)
       );
@@ -36,10 +33,10 @@ const App = () => {
 
         <Title>Contacts</Title>
         <Box display="flex" justifyContent="space-between">
-          <Filter value={filterValue} onChange={handleFilterInput} />
+          <Filter value={filter} onChange={handleFilterInput} />
           <h3>Total contacts: {filteredContacts.length}</h3>
         </Box>
-        <ContactList contacts={filteredContacts} dispatch={dispatch} />
+        <ContactList contacts={filteredContacts} />
       </Container>
     </Box>
   );

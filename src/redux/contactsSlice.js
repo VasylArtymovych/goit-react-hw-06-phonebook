@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { useSelector, useDispatch } from 'react-redux';
 
 const initialContacts = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -24,11 +25,40 @@ const contactsSlice = createSlice({
       };
     },
 
-    setfilter(state, action) {
-      state.filter = action.payload;
+    setFilter(state, action) {
+      return { ...state, filter: action.payload };
     },
   },
 });
 
-export const { addContact, deleteContact, setfilter } = contactsSlice.actions;
-export default contactsSlice;
+export const contactsSliceReducer = contactsSlice.reducer;
+export const { addContact, deleteContact, setFilter } = contactsSlice.actions;
+// Selectors
+export const getContacts = state => state.contacts.items;
+export const getFilter = state => state.contacts.filter;
+//Hooks
+export const useContacts = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+
+  const handleAddContact = contact => {
+    dispatch(addContact(contact));
+  };
+
+  const handleDeleteContact = id => {
+    dispatch(deleteContact(id));
+  };
+
+  const handleSetFilter = name => {
+    dispatch(setFilter(name));
+  };
+
+  return {
+    contacts,
+    filter,
+    addContact: handleAddContact,
+    deleteContact: handleDeleteContact,
+    setFilter: handleSetFilter,
+  };
+};
